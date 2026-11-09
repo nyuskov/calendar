@@ -26,12 +26,6 @@ const {
 const { show } = useToast();
 const menu = shallowRef<MenuState | null>(null);
 
-const selectionText = computed(
-  () =>
-    `Выделено: ${selectedStats.value.cells} ячеек, ` +
-    `${selectedStats.value.employees} сотрудника(-ов) · ${selectedStats.value.days} дн.`,
-);
-
 function openApplyMenu(event: MouseEvent): void {
   const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
 
@@ -63,7 +57,7 @@ function sendForApproval(): void {
 <template>
   <div class="board">
     <section class="panel panel--main">
-      <div class="toolbar">
+      <div v-if="!selected.length" class="toolbar">
         <label class="search">
           <svg
             width="18"
@@ -170,8 +164,12 @@ function sendForApproval(): void {
         </button>
       </div>
 
-      <div v-if="selected.length" class="selection">
-        <span class="selection__text">{{ selectionText }}</span>
+      <div v-else class="selection">
+        <span class="selection__text">
+          Выделено:
+          <span class="selection__count">{{ selectedStats.cells }} ячеек</span>
+          {{ selectedStats.employees }} сотрудника(-ов) · {{ selectedStats.days }} дн.
+        </span>
         <span class="selection__spacer" />
         <button
           class="selection__action"
@@ -179,6 +177,11 @@ function sendForApproval(): void {
           :disabled="saving"
           @click="openApplyMenu"
         >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M8 2 14 5 8 8 2 5l6-3Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+            <path d="m2 8 6 3 6-3" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+            <path d="m2 11 6 3 6-3" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+          </svg>
           Применить шаблон
         </button>
         <button
@@ -187,6 +190,9 @@ function sendForApproval(): void {
           type="button"
           @click="focusCustomTimes"
         >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M11.2 2.3a1.1 1.1 0 0 1 1.6 0l.9.9a1.1 1.1 0 0 1 0 1.6L5.6 12.9 3 13.5l.6-2.6 7.6-8.6Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+          </svg>
           Изменить
         </button>
         <button
@@ -195,6 +201,9 @@ function sendForApproval(): void {
           :disabled="saving"
           @click="schedule.removeSelectedShifts()"
         >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
           Очистить
         </button>
         <button
@@ -202,6 +211,9 @@ function sendForApproval(): void {
           type="button"
           @click="schedule.clearSelection()"
         >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="m4.5 4.5 7 7M11.5 4.5l-7 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
           Снять
         </button>
       </div>
