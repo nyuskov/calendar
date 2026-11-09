@@ -38,6 +38,43 @@ docker compose up -d --build
 
 Миграции и сиды выполняются автоматически при старте контейнера `backend`.
 
+## Запуск без Docker
+
+Нужны только PHP 8.3+ с расширением `pdo_sqlite`, Composer и Node 20+ с pnpm.
+PostgreSQL не обязателен: локальный скрипт работает на SQLite-файле
+`backend/database/database.sqlite`.
+
+```bash
+./dev-local.sh
+```
+
+Скрипт поставит зависимости, сгенерирует `APP_KEY`, накатит миграции с сидами,
+поднимет API на `http://localhost:8000` и Nuxt на `http://localhost:3000`
+(прокси `/api` уже настроен). `Ctrl+C` останавливает оба сервера.
+
+Вручную:
+
+```bash
+# бэкенд
+cd backend
+composer install
+cp .env.example .env          # если .env ещё нет
+php artisan key:generate
+touch database/database.sqlite
+DB_CONNECTION=sqlite DB_DATABASE="$PWD/database/database.sqlite" \
+  php artisan migrate --seed
+DB_CONNECTION=sqlite DB_DATABASE="$PWD/database/database.sqlite" \
+  php artisan serve --port=8000
+
+# фронтенд — во втором терминале
+cd frontend
+pnpm install
+NUXT_API_BASE=http://127.0.0.1:8000/api pnpm dev
+```
+
+Если локальный PostgreSQL есть, достаточно прописать свои `DB_*` в
+`backend/.env` — миграции те же.
+
 ## Проверки
 
 ### Бэкенд — PHPUnit, 23 теста
