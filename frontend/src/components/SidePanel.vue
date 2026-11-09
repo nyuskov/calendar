@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { fullTime, hoursLabel, normalizeTime } from "~/utils/date";
+import { computed, ref, watch } from "vue";
+import { fullTime, hoursLabel, normalizeTime } from "@/utils/date";
+import { useSchedule } from "@/composables/useSchedule";
+import { useToast } from "@/composables/useToast";
 
 const schedule = useSchedule();
 const { templates, selected, editableShift, templateUsage, saving } = schedule;

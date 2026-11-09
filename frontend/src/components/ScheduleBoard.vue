@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import type { ContextMenu } from "~/types";
-import { shortTime } from "~/utils/date";
+import { shallowRef } from "vue";
+import type { ContextMenu } from "@/types";
+import { shortTime } from "@/utils/date";
+import { useSchedule } from "@/composables/useSchedule";
+import AppMenu from "@/components/AppMenu.vue";
+import ScheduleTable from "@/components/ScheduleTable.vue";
+import SidePanel from "@/components/SidePanel.vue";
 
 const schedule = useSchedule();
 const {

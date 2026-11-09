@@ -29,7 +29,7 @@
 
 html,
 body,
-#__nuxt {
+#app {
     height: 100%;
 }
 

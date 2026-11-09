@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { MenuItem } from "~/types";
+import { onBeforeUnmount, onMounted, ref } from "vue";
+import type { MenuItem } from "@/types";
 
 const props = defineProps<{
   items: MenuItem[];

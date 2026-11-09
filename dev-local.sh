@@ -1,7 +1,7 @@
 #!/bin/bash
 set -u
 
-# Локальный запуск без Docker: Laravel (встроенный сервер) + Nuxt.
+# Локальный запуск без Docker: Laravel (встроенный сервер) + Vite.
 # База — SQLite-файл, чтобы не поднимать PostgreSQL.
 # Переменные окружения имеют приоритет над backend/.env, поэтому
 # существующий .env с pgsql можно не менять.
@@ -47,7 +47,7 @@ check_port() {
         echo "❌ Порт $port ($name) уже занят."
         echo "   Скорее всего остался прошлый запуск. Освободите порт:"
         echo "     pkill -f 'artisan serve'   # API"
-        echo "     pkill -f 'nuxt'            # приложение"
+        echo "     pkill -f 'vite'            # приложение"
         echo "   Или запустите на других портах: API_PORT=8001 WEB_PORT=3001 ./dev-local.sh"
         exit 1
     fi
@@ -113,7 +113,7 @@ else
         code=$?
         if [ "$code" -eq 137 ]; then
             echo "❌ Установка убита системой: не хватило памяти."
-            echo "   На хостингах с лимитом RSS ~256 МБ собрать Nuxt не получится."
+            echo "   На хостингах с лимитом RSS ~256 МБ сборка не влезает в память."
             echo "   Запускайте локально / в Docker или деплойте готовый .output."
         else
             echo "❌ pnpm install упал (код $code)."
@@ -123,7 +123,7 @@ else
 fi
 
 echo "🌐 Приложение: http://localhost:$WEB_PORT"
-NUXT_API_BASE="http://127.0.0.1:$API_PORT/api" pnpm dev --port "$WEB_PORT" &
+API_ORIGIN="http://127.0.0.1:$API_PORT" pnpm dev --port "$WEB_PORT" &
 FRONT_PID=$!
 
 echo ""

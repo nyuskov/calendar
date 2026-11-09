@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { Shift } from "~/types";
-import { hoursLabel, shortTime } from "~/utils/date";
+import { computed } from "vue";
+import type { Shift } from "@/types";
+import { hoursLabel, shortTime } from "@/utils/date";
 
 const props = defineProps<{
   shift: Shift;

@@ -1,4 +1,5 @@
-import type { Employee, Shift, ShiftTemplate, ViewMode } from "~/types";
+import { computed, ref } from "vue";
+import type { Employee, Shift, ShiftTemplate, ViewMode } from "@/types";
 import {
   addDays,
   addMonths,
@@ -7,9 +8,27 @@ import {
   fromYmd,
   isValidTime,
   toYmd,
-} from "~/utils/date";
+} from "@/utils/date";
 
 const API = "/api";
+
+// Состояние общее для всех компонентов — лежит в модуле, а не в компоненте.
+const employees = ref<Employee[]>([]);
+const templates = ref<ShiftTemplate[]>([]);
+const shifts = ref<Shift[]>([]);
+const search = ref<string>("");
+const view = ref<ViewMode>("week");
+const anchor = ref<string>(toYmd(new Date()));
+const selected = ref<string[]>([]);
+const loading = ref<boolean>(false);
+const saving = ref<boolean>(false);
+const ready = ref<boolean>(false);
+const errorMessage = ref<string | null>(null);
+
+interface RequestOptions {
+  method?: "GET" | "POST" | "PATCH" | "DELETE";
+  body?: unknown;
+}
 
 export interface CellKey {
   employeeId: number;
@@ -31,18 +50,6 @@ export function parseCell(key: string): CellKey | null {
 }
 
 export function useSchedule() {
-  const employees = useState<Employee[]>("schedule:employees", () => []);
-  const templates = useState<ShiftTemplate[]>("schedule:templates", () => []);
-  const shifts = useState<Shift[]>("schedule:shifts", () => []);
-  const search = useState<string>("schedule:search", () => "");
-  const view = useState<ViewMode>("schedule:view", () => "week");
-  const anchor = useState<string>("schedule:anchor", () => toYmd(new Date()));
-  const selected = useState<string[]>("schedule:selected", () => []);
-  const loading = useState<boolean>("schedule:loading", () => false);
-  const saving = useState<boolean>("schedule:saving", () => false);
-  const ready = useState<boolean>("schedule:ready", () => false);
-  const errorMessage = useState<string | null>("schedule:error", () => null);
-
   const dates = computed(() => buildDates(view.value, anchor.value));
   const from = computed(() => dates.value[0] ?? toYmd(new Date()));
   const to = computed(() => dates.value[dates.value.length - 1] ?? from.value);
@@ -131,11 +138,23 @@ export function useSchedule() {
 
   async function request<T>(
     path: string,
-    options: Record<string, unknown> = {},
+    options: RequestOptions = {},
   ): Promise<T> {
-    const response = await $fetch<{ data: T }>(`${API}${path}`, options);
+    const response = await fetch(`${API}${path}`, {
+      method: options.method ?? "GET",
+      headers: options.body
+        ? { "Content-Type": "application/json" }
+        : undefined,
+      body: options.body ? JSON.stringify(options.body) : undefined,
+    });
 
-    return response.data;
+    if (!response.ok) {
+      throw new Error(`API ${response.status}: ${response.statusText}`);
+    }
+
+    const payload = (await response.json()) as { data: T };
+
+    return payload.data;
   }
 
   async function loadEmployees(): Promise<void> {

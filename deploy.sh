@@ -30,7 +30,7 @@ if ! docker compose version >/dev/null 2>&1; then
     exit 1
 fi
 
-echo "🚀 Поднимаем стек: Postgres + Laravel + Nuxt..."
+echo "🚀 Поднимаем стек: Postgres + Laravel + Vue..."
 
 # Если остались контейнеры от прошлого запуска (в т.ч. из другой папки),
 # docker compose может упасть на конфликте имён — убираем остатки.
@@ -62,7 +62,7 @@ wait_for() {
 
 if command -v curl >/dev/null 2>&1; then
     wait_for "Laravel" "$API_URL/up" 90
-    wait_for "Nuxt" "$APP_URL" 180
+    wait_for "Vue/Vite" "$APP_URL" 180
 else
     echo "⚠️ curl не найден — пропускаю проверку готовности."
 fi

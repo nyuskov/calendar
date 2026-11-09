@@ -7,7 +7,7 @@
 
 | Слой | Технологии |
 |------|------------|
-| Фронтенд | Nuxt 4 (Vue 3, TypeScript), Inter, без UI-библиотек |
+| Фронтенд | Vue 3 + Vite (TypeScript), Inter, без UI-библиотек |
 | Бэкенд | Laravel 13 (PHP 8.4), REST API, валидация в контроллерах |
 | БД | PostgreSQL 16 |
 | Запуск | Docker Compose: `db` + `backend` + `frontend` |
@@ -21,7 +21,7 @@
 ./deploy.sh
 ```
 
-Скрипт соберёт образы, дождётся готовности API и Nuxt, покажет адреса и
+Скрипт соберёт образы, дождётся готовности API и приложения, покажет адреса и
 прицепится к логам. `Ctrl+C` останавливает контейнеры (данные БД сохраняются).
 
 Вручную:
@@ -49,7 +49,7 @@ PostgreSQL не обязателен: локальный скрипт работ
 ```
 
 Скрипт поставит зависимости, сгенерирует `APP_KEY`, накатит миграции с сидами,
-поднимет API на `http://localhost:8000` и Nuxt на `http://localhost:3000`
+поднимет API на `http://localhost:8000` и приложение на `http://localhost:3000`
 (прокси `/api` уже настроен). `Ctrl+C` останавливает оба сервера.
 
 Вручную:
@@ -69,7 +69,7 @@ DB_CONNECTION=sqlite DB_DATABASE="$PWD/database/database.sqlite" \
 # фронтенд — во втором терминале
 cd frontend
 pnpm install
-NUXT_API_BASE=http://127.0.0.1:8000/api pnpm dev
+API_ORIGIN=http://127.0.0.1:8000 pnpm dev
 ```
 
 Если локальный PostgreSQL есть, достаточно прописать свои `DB_*` в
@@ -170,11 +170,11 @@ calendar/
 │   ├── app/Http/Controllers/Api/
 │   ├── database/migrations/
 │   └── database/seeders/
-└── frontend/                 # Nuxt 4
-    └── app/
-        ├── pages/index.vue
+└── frontend/                 # Vue 3 + Vite
+    └── src/
+        ├── App.vue           # шапка, заголовок, доска
         ├── components/       # ScheduleBoard, ScheduleTable, SidePanel, ShiftChip, AppMenu
-        ├── composables/      # useSchedule (состояние и запросы к API)
+        ├── composables/      # useSchedule (состояние и запросы к API), useToast
         └── utils/date.ts
 ```
 

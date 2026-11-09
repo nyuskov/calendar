@@ -1,4 +1,4 @@
-import type { ViewMode } from "~/types";
+import type { ViewMode } from "@/types";
 
 export const MONTHS_GENITIVE = [
   "января",

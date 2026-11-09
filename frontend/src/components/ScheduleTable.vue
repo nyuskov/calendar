@@ -1,6 +1,9 @@
 <script setup lang="ts">
-import type { ContextMenu, Shift } from "~/types";
-import { cellKey } from "~/composables/useSchedule";
+import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
+import type { ContextMenu, Shift } from "@/types";
+import { cellKey, useSchedule } from "@/composables/useSchedule";
+import AppMenu from "@/components/AppMenu.vue";
+import ShiftChip from "@/components/ShiftChip.vue";
 import {
   dayLabel,
   dayNumber,
@@ -9,7 +12,7 @@ import {
   shortTime,
   toYmd,
   weekdayShort,
-} from "~/utils/date";
+} from "@/utils/date";
 
 const schedule = useSchedule();
 const {

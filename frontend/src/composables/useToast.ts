@@ -1,8 +1,11 @@
+import { ref } from "vue";
+
+// Одно сообщение на всё приложение — состояние живёт в модуле,
+// поэтому composable можно вызывать из любого компонента.
+const message = ref<string | null>(null);
 let toastTimer: ReturnType<typeof setTimeout> | undefined;
 
 export function useToast() {
-  const message = useState<string | null>("app:toast", () => null);
-
   function show(text: string): void {
     message.value = text;
 

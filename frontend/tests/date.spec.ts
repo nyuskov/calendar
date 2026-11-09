@@ -17,7 +17,7 @@ import {
   toYmd,
   weekdayIndex,
   weekdayShort,
-} from "../app/utils/date";
+} from "../src/utils/date";
 
 describe("toYmd / fromYmd", () => {
   it("сериализует и разбирает дату без сдвигов часового пояса", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cellKey, parseCell } from "../app/composables/useSchedule";
+import { cellKey, parseCell } from "../src/composables/useSchedule";
 
 describe("ключи ячеек", () => {
   it("склеивает сотрудника и дату", () => {
