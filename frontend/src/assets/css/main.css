@@ -64,6 +64,7 @@ input {
     width: clamp(240px, 16.47vw, 280px);
     flex: 0 0 clamp(240px, 16.47vw, 280px);
     padding: 14px;
+    border-right: 1px solid #ebebef;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -589,6 +590,12 @@ input {
 .cell__inner.is-selected {
     background: #ebeffd;
     border-color: transparent;
+    border-radius: 0;
+}
+
+/* Выделенная ячейка занимает всю клетку — соседние сливаются в блок. */
+.cell:has(.cell__inner.is-selected) {
+    padding: 0;
 }
 
 .cell__inner.is-drop-target {
