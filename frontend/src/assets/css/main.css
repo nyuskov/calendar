@@ -589,7 +589,7 @@ input {
 
 .cell__inner.is-selected {
     background: #ebeffd;
-    border-color: transparent;
+    border: 1px solid var(--brand);
     border-radius: 0;
 }
 
