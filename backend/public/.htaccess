@@ -3,6 +3,10 @@
         Options -MultiViews -Indexes
     </IfModule>
 
+    # На хостинге из этого же каталога раздаётся собранный фронтенд:
+    # сначала index.html (SPA), затем index.php (Laravel).
+    DirectoryIndex index.html index.php
+
     RewriteEngine On
 
     # Handle Authorization Header
