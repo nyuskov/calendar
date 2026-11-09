@@ -17,20 +17,40 @@ BACK_PID=""
 FRONT_PID=""
 
 cleanup() {
+    local code=$?
     echo ""
     echo "🛑 Останавливаем серверы..."
-    [ -n "$BACK_PID" ] && kill "$BACK_PID" 2>/dev/null
     [ -n "$FRONT_PID" ] && kill "$FRONT_PID" 2>/dev/null
+    [ -n "$BACK_PID" ] && kill "$BACK_PID" 2>/dev/null
     wait 2>/dev/null
     echo "✅ Остановлено. База осталась в backend/database/database.sqlite."
-    exit 0
+    exit "$code"
 }
 
-trap cleanup SIGINT SIGTERM
+# Очистка на любом выходе, сигналы просто приводят к нему.
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 fail() {
     echo "❌ $1"
     exit 1
+}
+
+port_busy() {
+    ss -tln 2>/dev/null | grep -qE "[:.]$1[[:space:]]"
+}
+
+check_port() {
+    local port="$1" name="$2"
+    if port_busy "$port"; then
+        echo "❌ Порт $port ($name) уже занят."
+        echo "   Скорее всего остался прошлый запуск. Освободите порт:"
+        echo "     pkill -f 'artisan serve'   # API"
+        echo "     pkill -f 'nuxt'            # приложение"
+        echo "   Или запустите на других портах: API_PORT=8001 WEB_PORT=3001 ./dev-local.sh"
+        exit 1
+    fi
 }
 
 # ---------- Проверки ----------
@@ -48,6 +68,9 @@ if ! php -r 'exit(version_compare(PHP_VERSION, "8.3.0", ">=") ? 0 : 1);'; then
 fi
 
 echo "🔧 PHP $PHP_VERSION, Node $(node -v), pnpm $(pnpm -v)"
+
+check_port "$API_PORT" API
+check_port "$WEB_PORT" приложение
 
 # ---------- Бэкенд ----------
 
@@ -77,9 +100,27 @@ BACK_PID=$!
 # ---------- Фронтенд ----------
 
 echo ""
-echo "📦 Фронтенд: зависимости..."
 cd "$PROJECT_DIR/frontend" || fail "Нет каталога frontend."
-pnpm install --silent || fail "pnpm install упал."
+
+if [ -d node_modules ] && [ -f node_modules/.modules.yaml ]; then
+    echo "📦 Фронтенд: зависимости уже установлены."
+else
+    echo "📦 Фронтенд: зависимости..."
+    # Ограничиваем память и конкуренцию: на маленьких VPS/hosting pnpm
+    # иначе убивается OOM-киллером (exit 137).
+    NODE_OPTIONS="--max-old-space-size=256" \
+        pnpm install --child-concurrency=1 --network-concurrency=2 || {
+        code=$?
+        if [ "$code" -eq 137 ]; then
+            echo "❌ Установка убита системой: не хватило памяти."
+            echo "   На хостингах с лимитом RSS ~256 МБ собрать Nuxt не получится."
+            echo "   Запускайте локально / в Docker или деплойте готовый .output."
+        else
+            echo "❌ pnpm install упал (код $code)."
+        fi
+        exit 1
+    }
+fi
 
 echo "🌐 Приложение: http://localhost:$WEB_PORT"
 NUXT_API_BASE="http://127.0.0.1:$API_PORT/api" pnpm dev --port "$WEB_PORT" &
