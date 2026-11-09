@@ -44,6 +44,45 @@ function isSelected(employeeId: number, date: string): boolean {
   return selected.value.includes(cellKey(employeeId, date));
 }
 
+/**
+ * Внешние границы выделенного блока: правую и нижнюю линии рисуем только
+ * там, где справа/снизу нет выделённой ячейки. Иначе на стыке получается
+ * двойная рамка 2px вместо одной линии.
+ */
+const selectionEdges = computed(() => {
+  const map = new Map<string, { right: boolean; bottom: boolean }>();
+  const set = new Set(selected.value);
+
+  employees.value.forEach((employee, row) => {
+    dates.value.forEach((date, col) => {
+      const key = cellKey(employee.id, date);
+
+      if (!set.has(key)) {
+        return;
+      }
+
+      const nextEmployee = employees.value[row + 1];
+      const nextDate = dates.value[col + 1];
+
+      map.set(key, {
+        right: !(nextDate && set.has(cellKey(employee.id, nextDate))),
+        bottom: !(nextEmployee && set.has(cellKey(nextEmployee.id, date))),
+      });
+    });
+  });
+
+  return map;
+});
+
+function edgeClass(employeeId: number, date: string): Record<string, boolean> {
+  const edge = selectionEdges.value.get(cellKey(employeeId, date));
+
+  return {
+    "sel--right": edge?.right ?? false,
+    "sel--bottom": edge?.bottom ?? false,
+  };
+}
+
 function onCellDown(employeeId: number, date: string, event: MouseEvent): void {
   if (event.button !== 0) {
     return;
@@ -231,6 +270,7 @@ onBeforeUnmount(() => {
               'is-weekend': isWeekend(fromYmd(date)),
               'is-selected': isSelected(employee.id, date),
               'is-drop-target': dropKey === cellKey(employee.id, date),
+              ...edgeClass(employee.id, date),
             }"
             @mousedown.prevent="onCellDown(employee.id, date, $event)"
             @mouseenter="onCellEnter(employee.id, date, $event)"

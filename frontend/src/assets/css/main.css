@@ -589,8 +589,19 @@ input {
 
 .cell__inner.is-selected {
     background: #ebeffd;
-    border: 1px solid var(--brand);
+    border: none;
+    border-left: 1px solid var(--brand);
+    border-top: 1px solid var(--brand);
     border-radius: 0;
+}
+
+/* Правую и нижнюю линии рисуем только по внешнему контуру блока. */
+.cell__inner.is-selected.sel--right {
+    border-right: 1px solid var(--brand);
+}
+
+.cell__inner.is-selected.sel--bottom {
+    border-bottom: 1px solid var(--brand);
 }
 
 /* Выделенная ячейка занимает всю клетку — соседние сливаются в блок. */
