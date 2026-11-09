@@ -283,8 +283,7 @@ onBeforeUnmount(() => {
               :key="shift.id"
               :shift="shift"
               :compact="isMonth"
-              @mousedown.stop
-              @click.stop="openShiftMenu($event, shift)"
+              @contextmenu.prevent.stop="openShiftMenu($event, shift)"
             />
 
             <span

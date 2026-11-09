@@ -106,7 +106,7 @@ test("создаёт свою смену, меняет время и удаля�
   await expect(chip).toContainText("10 - 20");
   await expect(chip).toContainText("10 ч");
 
-  await chip.click();
+  await chip.click({ button: "right" });
   await page.getByRole("button", { name: "Изменить время" }).click();
   await page.fill("#custom-start", "08:00");
   await page.fill("#custom-end", "18:00");
@@ -117,9 +117,28 @@ test("создаёт свою смену, меняет время и удаля�
 
   await expect(page.locator(".chip").first()).toContainText("08 - 18");
 
-  await page.locator(".chip").first().click();
+  await page.locator(".chip").first().click({ button: "right" });
   await page.getByRole("button", { name: "Удалить" }).click();
 
+  await expect(page.locator(".chip")).toHaveCount(0);
+  await expect(page.locator(".coverage__cell--empty")).toHaveCount(7);
+});
+
+test("клик по смене выделяет ячейку, «Очистить» удаляет смену", async ({
+  page,
+}) => {
+  await openSchedule(page);
+
+  await page.locator(".cell__inner").nth(7).click();
+  await page.locator(".template-card").first().click();
+  await expect(page.locator(".chip")).toHaveCount(1);
+  await expect(page.locator(".selection")).toHaveCount(0);
+
+  // Клик по смене выделяет ячейку — значит её можно очистить.
+  await page.locator(".chip").first().click();
+  await expect(page.locator(".selection__text")).toContainText("1 ячеек");
+
+  await page.getByRole("button", { name: "Очистить" }).click();
   await expect(page.locator(".chip")).toHaveCount(0);
   await expect(page.locator(".coverage__cell--empty")).toHaveCount(7);
 });
