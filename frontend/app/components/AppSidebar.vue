@@ -40,10 +40,17 @@
 
     <div class="sidebar__bottom">
       <button class="nav__item" type="button">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <path d="M12.5 4 7 10l5.5 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+          <path
+            d="M6.39872 1.19655L6.39872 16.8034M17.3235 3.7977L17.3235 14.2023C17.3235 15.9262 15.9261 17.3237 14.2022 17.3237H3.79758C2.07369 17.3237 0.676197 15.9262 0.676197 14.2023V3.7977C0.676197 2.07381 2.07368 0.676325 3.79757 0.676325L14.2022 0.676324C15.9261 0.676324 17.3235 2.07381 17.3235 3.7977Z"
+            stroke="currentColor"
+            stroke-width="1.353"
+          />
         </svg>
         Свернуть меню
+        <svg class="nav__chevron" width="10" height="5" viewBox="0 0 10 5" fill="none" aria-hidden="true">
+          <path d="M8.5 0.75 5 2.5l3.5 1.75" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
       </button>
     </div>
   </aside>

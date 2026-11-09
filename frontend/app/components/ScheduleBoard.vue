@@ -178,9 +178,11 @@ function sendForApproval(): void {
           @click="openApplyMenu"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M8 2 14 5 8 8 2 5l6-3Z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
-            <path d="m2 8 6 3 6-3" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
-            <path d="m2 11 6 3 6-3" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round" />
+            <path
+              d="M7.99935 2.99993L7.99935 12.9999M2.66602 7.99993H12.9993M2.66602 4.6666L2.66602 11.3333C2.66602 12.4378 3.56145 13.3333 4.66602 13.3333H11.3327C12.4373 13.3333 13.3327 12.4378 13.3327 11.3333V4.6666C13.3327 3.56203 12.4373 2.6666 11.3327 2.6666L4.66602 2.6666C3.56145 2.6666 2.66602 3.56203 2.66602 4.6666Z"
+              stroke="currentColor"
+              stroke-width="0.867"
+            />
           </svg>
           Применить шаблон
         </button>
@@ -202,7 +204,13 @@ function sendForApproval(): void {
           @click="schedule.removeSelectedShifts()"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M3.33203 4.54902H12.8135M6.88759 10.8235V7.05883M9.25796 10.8235V7.05883M10.4431 13.3333H5.7024C5.04784 13.3333 4.51722 12.7715 4.51722 12.0784V5.17648C4.51722 4.82994 4.78253 4.54902 5.10981 4.54902H11.0357C11.363 4.54902 11.6283 4.82994 11.6283 5.17648V12.0784C11.6283 12.7715 11.0977 13.3333 10.4431 13.3333ZM6.88759 4.54902H9.25796C9.58524 4.54902 9.85055 4.26811 9.85055 3.92157V3.29412C9.85055 2.94759 9.58524 2.66667 9.25796 2.66667H6.88759C6.56031 2.66667 6.29499 2.94759 6.29499 3.29412V3.92157C6.29499 4.26811 6.56031 4.54902 6.88759 4.54902Z"
+              stroke="currentColor"
+              stroke-width="0.9"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
           Очистить
         </button>
@@ -212,7 +220,14 @@ function sendForApproval(): void {
           @click="schedule.clearSelection()"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="m4.5 4.5 7 7M11.5 4.5l-7 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+            <g transform="translate(3.5 3.5)">
+              <path
+                d="M8.49403 0.505506L4.49988 4.49966M4.49988 4.49966L0.505729 8.49381M4.49988 4.49966L8.49403 8.4938M4.49988 4.49966L0.505729 0.505506"
+                stroke="currentColor"
+                stroke-width="1.011"
+                stroke-linecap="round"
+              />
+            </g>
           </svg>
           Снять
         </button>
