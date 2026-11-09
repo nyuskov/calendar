@@ -32,9 +32,10 @@ class ShiftScheduleTest extends TestCase
     {
         $response = $this->getJson('/api/employees');
 
-        $response->assertOk()->assertJsonCount(8, 'data');
+        $response->assertOk()->assertJsonCount(20, 'data');
         $response->assertJsonPath('data.0.full_name', 'Кузнецова Алина');
         $response->assertJsonPath('data.7.full_name', 'Гаврилов Егор');
+        $response->assertJsonPath('data.19.full_name', 'Алексеев Глеб');
     }
 
     public function test_bulk_assignment_creates_a_shift_for_every_cell(): void

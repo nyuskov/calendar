@@ -48,7 +48,7 @@ async function clearWeekShifts(request: APIRequestContext): Promise<void> {
 async function openSchedule(page: Page): Promise<void> {
   await page.goto("/");
   // Ждём, пока загрузятся сотрудники и шаблоны.
-  await expect(page.locator(".employee-cell__name")).toHaveCount(8);
+  await expect(page.locator(".employee-cell__name")).toHaveCount(20);
   await expect(page.locator(".template-card")).toHaveCount(3);
 }
 
@@ -132,7 +132,7 @@ test("фильтрует сотрудников поиском по ФИО", asy
   await expect(page.locator(".employee-cell__name")).toHaveText("Волков Тимур");
 
   await page.locator(".search input").fill("");
-  await expect(page.locator(".employee-cell__name")).toHaveCount(8);
+  await expect(page.locator(".employee-cell__name")).toHaveCount(20);
 });
 
 test("показывает месячный вид и покрытие после назначения", async ({

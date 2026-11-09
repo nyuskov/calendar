@@ -212,9 +212,10 @@ onBeforeUnmount(() => {
       </div>
 
       <div
-        v-for="employee in employees"
+        v-for="(employee, index) in employees"
         :key="employee.id"
         class="schedule__row"
+        :class="{ 'row--alt': index % 2 === 1 }"
       >
         <div class="employee-cell col-employee">
           <div class="avatar" :style="{ background: employee.avatar_color }">

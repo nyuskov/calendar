@@ -48,9 +48,6 @@
           />
         </svg>
         Свернуть меню
-        <svg class="nav__chevron" width="10" height="5" viewBox="0 0 10 5" fill="none" aria-hidden="true">
-          <path d="M8.5 0.75 5 2.5l3.5 1.75" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
       </button>
     </div>
   </aside>

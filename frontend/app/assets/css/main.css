@@ -161,13 +161,6 @@ input {
     color: var(--text-muted);
 }
 
-.nav__chevron {
-    flex: none !important;
-    margin-left: auto;
-    width: 10px;
-    height: 5px;
-}
-
 .nav__badge {
     margin-left: auto;
     min-width: 20px;
@@ -966,6 +959,26 @@ input {
 
 
 /* ===== Соответствие макету (сверено через Figma MCP) ===== */
+
+/* Зебра строк: чётные строки сотрудников — #F8F8F9, как в макете. */
+.schedule__row.row--alt {
+    background: #f8f8f9;
+}
+
+.schedule__row.row--alt .col-employee {
+    background: #f8f8f9;
+}
+
+/* Карточка не выше экрана; таблица прокручивается, покрытие липнет к низу. */
+.panel--main {
+    max-height: calc(100dvh - 284px);
+}
+
+.coverage {
+    position: sticky;
+    bottom: 0;
+}
+
 
 .chip {
     align-items: center;
