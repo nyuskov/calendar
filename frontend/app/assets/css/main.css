@@ -194,7 +194,7 @@ input {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 24px 30px 24px 16px;
+    padding: 24px 30px 24px 30px;
 }
 
 .breadcrumbs {
@@ -316,7 +316,7 @@ input {
 
 .panel--main {
     border-radius: var(--radius-lg);
-    padding: 24px 12px 12px;
+    padding: 12px;
     gap: 20px;
 }
 
@@ -333,7 +333,6 @@ input {
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
-    padding: 0 12px;
 }
 
 .search {
@@ -423,7 +422,6 @@ input {
 /* ---------- Выделение ---------- */
 
 .selection {
-    margin: 0 12px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -486,7 +484,6 @@ input {
     flex: 1;
     min-height: 0;
     overflow: auto;
-    border-radius: var(--radius-sm);
 }
 
 .schedule {
@@ -530,10 +527,6 @@ input {
 .schedule__head-cell--days:hover {
     color: var(--text);
     background: var(--bg);
-}
-
-.schedule__head-cell.is-weekend {
-    color: #a0a0a8;
 }
 
 .schedule__head-cell.is-month-head {
@@ -610,10 +603,6 @@ input {
     cursor: pointer;
     transition: background 0.12s ease, border-color 0.12s ease;
     position: relative;
-}
-
-.cell__inner.is-weekend {
-    background: #fafafc;
 }
 
 .cell__inner:hover {

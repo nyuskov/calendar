@@ -23,7 +23,6 @@ const {
   search,
 } = schedule;
 
-const { show } = useToast();
 const menu = shallowRef<MenuState | null>(null);
 
 function openApplyMenu(event: MouseEvent): void {
@@ -41,16 +40,8 @@ function openApplyMenu(event: MouseEvent): void {
   };
 }
 
-function openDateOnlyMenu(): void {
-  show("Выберите шаблон, чтобы назначить смену");
-}
-
 function focusCustomTimes(): void {
   document.querySelector<HTMLInputElement>("#custom-start")?.focus();
-}
-
-function sendForApproval(): void {
-  show("График отправлен на согласование");
 }
 </script>
 
@@ -146,22 +137,7 @@ function sendForApproval(): void {
               />
             </svg>
           </button>
-          <button
-            class="btn btn--ghost btn--sm"
-            type="button"
-            @click="schedule.goToday()"
-          >
-            Сегодня
-          </button>
         </div>
-
-        <button
-          class="btn btn--ghost btn--sm"
-          type="button"
-          @click="sendForApproval"
-        >
-          Отправить на согласование
-        </button>
       </div>
 
       <div v-else class="selection">
