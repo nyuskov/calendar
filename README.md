@@ -40,11 +40,53 @@ docker compose up -d --build
 
 ## Проверки
 
+### Бэкенд — PHPUnit, 23 теста
+
 ```bash
-# 9 feature-тестов API (SQLite in-memory)
+# SQLite in-memory, рабочая БД не затрагивается
 docker compose exec backend php artisan test
 
-# строгая проверка типов и production-сборка фронтенда
+# тот же прогон с покрытием (pcov), порог виден в отчёте
+docker compose exec backend php artisan test --coverage
+```
+
+Покрытие: **100% строк** в `app/` (контроллеры и модели; неиспользуемая модель
+`User` исключена из отчёта).
+
+### Фронтенд — Vitest, 17 тестов
+
+```bash
+docker compose exec frontend pnpm test
+docker compose exec frontend pnpm test:coverage
+```
+
+Покрытие `app/utils`: **100% строк**. Проверяются даты (неделя/месяц,
+переносы, выходные), формат и нормализация времени, ключи ячеек.
+
+### E2E — Playwright, 5 сценариев
+
+Приложение должно быть запущено (`./deploy.sh`). Тесты чистят смены текущей
+недели через API — данные не страдают.
+
+```bash
+cd frontend
+pnpm install                 # если node_modules ещё нет локально
+
+# вариант 1: установленный Google Chrome
+PW_CHANNEL=chrome pnpm test:e2e
+
+# вариант 2: браузер Playwright
+pnpm exec playwright install chromium
+pnpm test:e2e
+```
+
+Сценарии: загрузка графика, назначение шаблона на выделенные ячейки,
+создание/изменение/удаление своей смены, поиск по ФИО, месячный вид.
+
+### Статический анализ и сборка
+
+```bash
+docker compose exec backend ./vendor/bin/pint --test
 docker compose exec frontend pnpm typecheck
 docker compose exec frontend pnpm build
 ```

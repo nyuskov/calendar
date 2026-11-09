@@ -8,7 +8,12 @@ RUN apk add --no-cache \
         libzip-dev \
         $PHPIZE_DEPS \
     && docker-php-ext-install -j"$(nproc)" pdo_pgsql pdo_sqlite mbstring bcmath intl opcache \
+    && pecl install pcov \
+    && docker-php-ext-enable pcov \
     && apk del $PHPIZE_DEPS
+
+# pcov активен, но собирает данные только во время тестов (PHPUnit сам вызывает pcov\start).
+RUN printf 'pcov.enabled=1\npcov.directory=/app\n' > /usr/local/etc/php/conf.d/pcov.ini
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 

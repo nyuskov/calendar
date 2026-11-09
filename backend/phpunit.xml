@@ -16,6 +16,10 @@
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <!-- Авторизации в задании нет, модель осталась от скелета Laravel. -->
+            <file>app/Models/User.php</file>
+        </exclude>
     </source>
     <php>
         <env name="APP_ENV" value="testing"/>

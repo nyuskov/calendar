@@ -44,6 +44,8 @@ frontend/.data/
 frontend/dist/
 frontend/.pnpm-store/
 .pnpm-store/
+frontend/test-results/
+frontend/playwright-report/
 
 # Docker / IDE
 *.log

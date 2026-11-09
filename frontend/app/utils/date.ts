@@ -140,7 +140,10 @@ export function normalizeTime(value: string): string {
     return digits.padStart(2, "0");
   }
 
-  return `${digits.slice(0, 2)}:${digits.slice(2)}`;
+  // «930» → «09:30», «0930» → «09:30».
+  const padded = digits.padStart(4, "0");
+
+  return `${padded.slice(0, 2)}:${padded.slice(2)}`;
 }
 
 export function isValidTime(value: string): boolean {

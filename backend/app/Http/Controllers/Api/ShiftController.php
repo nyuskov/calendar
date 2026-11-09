@@ -36,7 +36,7 @@ class ShiftController extends Controller
             'date' => ['required', 'date_format:Y-m-d'],
             'template_id' => ['nullable', 'integer', 'exists:shift_templates,id'],
             'start_time' => ['required_without:template_id', 'date_format:H:i'],
-            'end_time' => ['required_without:template_id', 'date_format:H:i'],
+            'end_time' => ['required_without:template_id', 'date_format:H:i', 'different:start_time'],
         ]);
 
         [$start, $end, $template, $color] = $this->resolveTimes($data);
@@ -70,7 +70,7 @@ class ShiftController extends Controller
             'dates.*' => ['date_format:Y-m-d'],
             'template_id' => ['nullable', 'integer', 'exists:shift_templates,id'],
             'start_time' => ['required_without:template_id', 'date_format:H:i'],
-            'end_time' => ['required_without:template_id', 'date_format:H:i'],
+            'end_time' => ['required_without:template_id', 'date_format:H:i', 'different:start_time'],
         ]);
 
         [$start, $end, $template, $color] = $this->resolveTimes($data);
@@ -108,7 +108,7 @@ class ShiftController extends Controller
         $data = $request->validate([
             'template_id' => ['nullable', 'integer', 'exists:shift_templates,id'],
             'start_time' => ['nullable', 'date_format:H:i'],
-            'end_time' => ['nullable', 'date_format:H:i', 'required_with:start_time'],
+            'end_time' => ['nullable', 'date_format:H:i', 'required_with:start_time', 'different:start_time'],
         ]);
 
         if (! empty($data['template_id'])) {
