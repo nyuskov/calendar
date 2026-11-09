@@ -69,7 +69,7 @@ test("открывает график с сотрудниками, шаблон�
   await expect(page.locator(".employee-cell__name").first()).toHaveText(
     "Кузнецова Алина",
   );
-  await expect(page.locator(".coverage__pill--empty")).toHaveCount(7);
+  await expect(page.locator(".coverage__cell--empty")).toHaveCount(7);
 });
 
 test("назначает шаблон на две выделенные ячейки", async ({ page, request }) => {
@@ -83,9 +83,9 @@ test("назначает шаблон на две выделенные ячей�
 
   await expect(page.locator(".chip")).toHaveCount(2);
   await expect(page.locator(".chip").first()).toContainText("07 - 15");
-  await expect(page.locator(".coverage__pill").nth(0)).toHaveText("1");
-  await expect(page.locator(".coverage__pill").nth(1)).toHaveText("1");
-  await expect(page.locator(".coverage__pill").nth(2)).toHaveText("0");
+  await expect(page.locator(".coverage__cell").nth(0)).toHaveText("1");
+  await expect(page.locator(".coverage__cell").nth(1)).toHaveText("1");
+  await expect(page.locator(".coverage__cell").nth(2)).toHaveText("0");
 
   const { from, to } = weekRange();
   const shifts = await request.get(`/api/shifts?from=${from}&to=${to}`);
@@ -121,7 +121,7 @@ test("создаёт свою смену, меняет время и удаля�
   await page.getByRole("button", { name: "Удалить" }).click();
 
   await expect(page.locator(".chip")).toHaveCount(0);
-  await expect(page.locator(".coverage__pill--empty")).toHaveCount(7);
+  await expect(page.locator(".coverage__cell--empty")).toHaveCount(7);
 });
 
 test("фильтрует сотрудников поиском по ФИО", async ({ page }) => {

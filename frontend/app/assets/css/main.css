@@ -3,9 +3,9 @@
     --card: #ffffff;
     --text: #101012;
     --text-muted: #737378;
-    --brand: #1c4ae5;
-    --brand-hover: #1b43cd;
-    --brand-soft: #e8f1ff;
+    --brand: #5b7dec;
+    --brand-hover: #4f70de;
+    --brand-soft: #ebeffc;
     --chip-cornflower-bg: #e8edfc;
     --chip-cornflower-text: #5b7dec;
     --chip-mint-bg: #e0f8f7;
@@ -944,6 +944,115 @@ input {
 .template-card__name,
 .template-card__time {
     display: block;
+}
+
+
+/* ===== Соответствие макету (сверено через Figma MCP) ===== */
+
+.chip {
+    align-items: center;
+    text-align: center;
+}
+
+.chip__time,
+.chip__hours {
+    width: 100%;
+}
+
+
+.sidebar__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px 16px;
+}
+
+.sidebar__top .sidebar__logo {
+    padding: 0;
+}
+
+.sidebar__top .icon-btn {
+    width: 40px;
+    height: 40px;
+    color: var(--text);
+}
+
+.nav__item.is-active {
+    background: #fff;
+}
+
+.segmented {
+    background: var(--bg);
+}
+
+.segmented button.is-active {
+    background: #3c3c43;
+    color: #fff;
+    box-shadow: none;
+}
+
+.btn--tinted {
+    background: #e8edfc;
+    color: #1c4ae5;
+}
+
+.btn--tinted:hover:not(:disabled) {
+    background: #dce4fb;
+}
+
+.btn--primary:disabled {
+    background: #e8edfc;
+    color: #5b7dec;
+    opacity: 1;
+}
+
+.breadcrumbs button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--text);
+}
+
+.template-card {
+    border: none;
+    border-left: 4px solid transparent;
+    padding: 10px 12px 10px 10px;
+}
+
+.template-card--cornflower {
+    border-left-color: #bbc9f7;
+}
+
+.template-card--mint {
+    border-left-color: #b2eeeb;
+}
+
+.template-card--lavanda {
+    border-left-color: #c8adff;
+}
+
+.coverage__cell {
+    height: 40px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+}
+
+.coverage__cell--empty {
+    background: #fbe5e5;
+    color: #dc2626;
+}
+
+.coverage__cell--filled {
+    background: #ebeffc;
+    color: #3e87ff;
+    font-weight: 500;
+}
+
+.coverage__cell--last {
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 @media (max-width: 1280px) {

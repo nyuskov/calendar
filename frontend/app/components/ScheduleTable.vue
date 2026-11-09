@@ -263,17 +263,18 @@ onBeforeUnmount(() => {
 
       <div class="schedule__row coverage">
         <div class="coverage__label col-employee">Покрытие</div>
-        <div v-for="date in dates" :key="date" class="coverage__cell">
-          <div
-            class="coverage__pill"
-            :class="
-              (coverage.get(date) ?? 0) > 0
-                ? 'coverage__pill--filled'
-                : 'coverage__pill--empty'
-            "
-          >
-            {{ coverage.get(date) ?? 0 }}
-          </div>
+        <div
+          v-for="(date, index) in dates"
+          :key="date"
+          class="coverage__cell"
+          :class="[
+            (coverage.get(date) ?? 0) > 0
+              ? 'coverage__cell--filled'
+              : 'coverage__cell--empty',
+            { 'coverage__cell--last': index === dates.length - 1 },
+          ]"
+        >
+          {{ coverage.get(date) ?? 0 }}
         </div>
       </div>
     </div>

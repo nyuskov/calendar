@@ -58,6 +58,7 @@ function normalizeEnd(): void {
         :key="template.id"
         type="button"
         class="template-card"
+        :class="`template-card--${template.color_key}`"
         draggable="true"
         :disabled="saving"
         @dragstart="dragStart($event, template.id)"

@@ -69,7 +69,7 @@ function publish(): void {
   <div class="content__title-row">
     <h1 class="content__title">График</h1>
     <div class="content__actions">
-      <button class="btn btn--ghost" type="button" @click="publish">
+      <button class="btn btn--tinted" type="button" @click="publish">
         Опубликовать
       </button>
       <button class="btn btn--primary" type="button" @click="save">
