@@ -75,6 +75,35 @@ API_ORIGIN=http://127.0.0.1:8000 pnpm dev
 Если локальный PostgreSQL есть, достаточно прописать свои `DB_*` в
 `backend/.env` — миграции те же.
 
+## Деплой на хостинг без Node
+
+Vue собирается в статику, поэтому на сервере Node не нужен вообще — только PHP
+для API. Схема: `dist` и Laravel живут в одном каталоге `backend/public`.
+
+```bash
+# 1. собрать фронтенд (локально или в Docker)
+cd frontend && pnpm build          # → frontend/dist
+
+# 2. залить содержимое dist в backend/public на сервере
+scp -r dist/* user@host:~/calendar/backend/public/
+
+# 3. на сервере: база, ключ, миграции
+cd ~/calendar/backend
+cp .env.example .env               # если ещё нет
+sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env
+sed -i "s|^DB_DATABASE=.*|DB_DATABASE=$PWD/database/database.sqlite|" .env
+touch database/database.sqlite
+php artisan key:generate
+php artisan migrate --seed --force
+
+# 4. DocumentRoot сайта направить на backend/public
+#    (например, ln -s ~/calendar/backend/public ~/www)
+```
+
+`backend/public/.htaccess` содержит `DirectoryIndex index.html index.php`:
+сначала отдаётся SPA, а запросы `/api/*` уходят в Laravel. Прокси и CORS не
+нужны — один origin.
+
 ## Проверки
 
 ### Бэкенд — PHPUnit, 23 теста
