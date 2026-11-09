@@ -61,8 +61,8 @@ input {
 /* ---------- Сайдбар ---------- */
 
 .sidebar {
-    width: 280px;
-    flex: 0 0 280px;
+    width: clamp(240px, 16.47vw, 280px);
+    flex: 0 0 clamp(240px, 16.47vw, 280px);
     padding: 14px;
     display: flex;
     flex-direction: column;
@@ -70,40 +70,17 @@ input {
 }
 
 .sidebar__logo {
-    padding: 8px 12px 16px;
+    padding: 0;
     font-size: 20px;
     font-weight: 700;
     letter-spacing: 0.01em;
 }
 
-.user {
-    position: relative;
+.sidebar__top {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 8px;
-    border-radius: var(--radius-sm);
-}
-
-.user__name {
-    font-size: 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.user__role {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-.user__counter {
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    font-size: 12px;
-    color: var(--text-muted);
-    white-space: nowrap;
+    justify-content: space-between;
+    padding: 8px 12px 16px;
 }
 
 .avatar {
@@ -153,7 +130,7 @@ input {
 }
 
 .nav__item.is-active {
-    background: var(--border);
+    background: #fff;
 }
 
 .nav__item svg {
@@ -161,18 +138,10 @@ input {
     color: var(--text-muted);
 }
 
-.nav__badge {
-    margin-left: auto;
-    min-width: 20px;
-    height: 20px;
-    padding: 0 6px;
-    border-radius: 4px;
-    background: var(--brand);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    display: grid;
-    place-items: center;
+.sidebar__top .icon-btn {
+    width: 40px;
+    height: 40px;
+    color: var(--text);
 }
 
 .sidebar__bottom {
@@ -186,8 +155,8 @@ input {
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 24px 30px 24px 30px;
+    gap: 24px;
+    padding: 24px clamp(16px, 1.765vw, 30px);
 }
 
 .breadcrumbs {
@@ -201,13 +170,13 @@ input {
 .breadcrumbs button {
     display: grid;
     place-items: center;
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
     border: none;
-    border-radius: 6px;
-    background: transparent;
+    border-radius: 50%;
+    background: #fff;
     cursor: pointer;
-    color: var(--text-muted);
+    color: var(--text);
 }
 
 .breadcrumbs button:hover {
@@ -231,12 +200,12 @@ input {
 .content__actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
 }
 
 .btn {
     height: 48px;
-    padding: 0 20px;
+    padding: 0 16px;
     border: none;
     border-radius: var(--radius-sm);
     font-size: 16px;
@@ -259,33 +228,18 @@ input {
     background: var(--brand-hover);
 }
 
-.btn--ghost {
-    background: transparent;
-    color: var(--brand);
+.btn--tinted {
+    background: #e8edfc;
+    color: #1c4ae5;
 }
 
-.btn--ghost:hover:not(:disabled) {
-    background: #eef1fe;
-}
-
-.btn--soft {
-    background: var(--bg);
-    color: var(--text);
-}
-
-.btn--soft:hover:not(:disabled) {
-    background: #e9eaef;
+.btn--tinted:hover:not(:disabled) {
+    background: #dce4fb;
 }
 
 .btn:disabled {
     opacity: 0.45;
     cursor: not-allowed;
-}
-
-.btn--sm {
-    height: 36px;
-    padding: 0 14px;
-    font-size: 14px;
 }
 
 /* ---------- Доска ---------- */
@@ -296,7 +250,7 @@ input {
     display: grid;
     align-items: start;
     align-content: start;
-    grid-template-columns: minmax(0, 1fr) 335px;
+    grid-template-columns: minmax(0, 1fr) clamp(300px, 19.75vw, 335px);
     gap: 8px;
 }
 
@@ -311,6 +265,7 @@ input {
     border-radius: var(--radius-lg);
     padding: 12px;
     gap: 20px;
+    max-height: calc(100dvh - 284px);
 }
 
 .panel--side {
@@ -322,15 +277,16 @@ input {
 }
 
 .toolbar {
+    flex: none;
     display: flex;
     align-items: center;
     gap: 12px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
 
 .search {
     flex: 0 1 398px;
-    min-width: 220px;
+    min-width: 180px;
     height: 48px;
     display: flex;
     align-items: center;
@@ -359,7 +315,7 @@ input {
     height: 48px;
     padding: 2px;
     border-radius: var(--radius-sm);
-    background: var(--border);
+    background: var(--bg);
 }
 
 .segmented button {
@@ -374,8 +330,8 @@ input {
 }
 
 .segmented button.is-active {
-    background: #fff;
-    box-shadow: 0 1px 2px rgba(16, 24, 40, 0.08);
+    background: #3c3c43;
+    color: #fff;
 }
 
 .toolbar__spacer {
@@ -415,10 +371,11 @@ input {
 /* ---------- Выделение ---------- */
 
 .selection {
+    flex: none;
     display: flex;
     align-items: center;
     gap: 8px;
-    height: 52px;
+    height: 48px;
     padding: 0 8px 0 12px;
     border-radius: var(--radius-sm);
     background: #3c3c43;
@@ -476,7 +433,24 @@ input {
 .table-scroll {
     flex: 1;
     min-height: 0;
+    margin-right: -12px;
     overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-dashed) transparent;
+}
+
+.table-scroll::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: var(--border-dashed);
 }
 
 .schedule {
@@ -490,6 +464,15 @@ input {
     grid-template-columns:
         var(--employee-col) repeat(var(--days, 7), var(--day-col));
     align-items: stretch;
+}
+
+/* Зебра: чётные строки сотрудников — #F8F8F9, как в макете. */
+.schedule__row.row--alt {
+    background: #f8f8f9;
+}
+
+.schedule__row.row--alt .col-employee {
+    background: #f8f8f9;
 }
 
 .schedule__head {
@@ -548,14 +531,14 @@ input {
 
 .schedule__head .col-employee {
     z-index: 4;
-    padding-left: 10px;
+    padding-left: 12px;
 }
 
 .employee-cell {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 0 12px 6px;
+    padding: 12px 0 12px 8px;
     min-width: 0;
 }
 
@@ -644,11 +627,13 @@ input {
     min-height: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
     gap: 2px;
     padding: 6px 8px;
     border-radius: var(--radius-sm);
     font-size: 16px;
+    text-align: center;
     cursor: pointer;
     overflow: hidden;
     user-select: none;
@@ -656,6 +641,11 @@ input {
 
 .chip:hover {
     filter: brightness(0.97);
+}
+
+.chip__time,
+.chip__hours {
+    width: 100%;
 }
 
 .chip__time {
@@ -712,6 +702,8 @@ input {
 /* ---------- Покрытие ---------- */
 
 .coverage {
+    position: sticky;
+    bottom: 0;
     background: #fff;
     z-index: 3;
     padding-top: 0;
@@ -722,31 +714,25 @@ input {
     align-items: center;
     font-size: 16px;
     color: var(--text-muted);
-    padding: 0 12px 0 10px;
+    padding: 0 12px;
     background: #fff;
 }
 
 .coverage__cell {
-    padding: 4px;
-    display: flex;
-}
-
-.coverage__pill {
-    flex: 1;
-    height: 32px;
+    height: 48px;
+    padding: 0;
     display: grid;
     place-items: center;
-    border-radius: var(--radius-sm);
     font-size: 14px;
 }
 
-.coverage__pill--empty {
-    background: var(--danger-soft);
-    color: var(--danger);
+.coverage__cell--empty {
+    background: #fbe5e5;
+    color: #dc2626;
 }
 
-.coverage__pill--filled {
-    background: var(--brand-soft);
+.coverage__cell--filled {
+    background: #ebeffc;
     color: #3e87ff;
     font-weight: 500;
 }
@@ -770,13 +756,27 @@ input {
     align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 10px 12px;
+    height: 64px;
+    padding: 8px 12px;
     border: none;
+    border-left: 4px solid transparent;
     border-radius: var(--radius-sm);
     background: var(--bg);
     text-align: left;
     cursor: pointer;
     transition: background 0.15s ease;
+}
+
+.template-card--cornflower {
+    border-left-color: #bbc9f7;
+}
+
+.template-card--mint {
+    border-left-color: #b2eeeb;
+}
+
+.template-card--lavanda {
+    border-left-color: #c8adff;
 }
 
 .template-card:hover {
@@ -937,11 +937,6 @@ input {
     color: var(--text-muted);
 }
 
-.user__info {
-    min-width: 0;
-    padding-right: 34px;
-}
-
 .schedule__head-cell.is-today {
     color: var(--text);
     font-weight: 600;
@@ -958,139 +953,21 @@ input {
     display: block;
 }
 
-
-/* ===== Соответствие макету (сверено через Figma MCP) ===== */
-
-/* Зебра строк: чётные строки сотрудников — #F8F8F9, как в макете. */
-.schedule__row.row--alt {
-    background: #f8f8f9;
-}
-
-.schedule__row.row--alt .col-employee {
-    background: #f8f8f9;
-}
-
-/* Карточка не выше экрана; таблица прокручивается, покрытие липнет к низу. */
-.panel--main {
-    max-height: calc(100dvh - 284px);
-}
-
-.coverage {
-    position: sticky;
-    bottom: 0;
-}
-
-
-.chip {
-    align-items: center;
-    text-align: center;
-}
-
-.chip__time,
-.chip__hours {
-    width: 100%;
-}
-
-
-.sidebar__top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px 16px;
-}
-
-.sidebar__top .sidebar__logo {
-    padding: 0;
-}
-
-.sidebar__top .icon-btn {
-    width: 40px;
-    height: 40px;
-    color: var(--text);
-}
-
-.nav__item.is-active {
-    background: #fff;
-}
-
-.segmented {
-    background: var(--bg);
-}
-
-.segmented button.is-active {
-    background: #3c3c43;
-    color: #fff;
-    box-shadow: none;
-}
-
-.btn--tinted {
-    background: #e8edfc;
-    color: #1c4ae5;
-}
-
-.btn--tinted:hover:not(:disabled) {
-    background: #dce4fb;
-}
-
-.btn--primary:disabled {
-    background: #e8edfc;
-    color: #5b7dec;
-    opacity: 1;
-}
-
-.breadcrumbs button {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #fff;
-    color: var(--text);
-}
-
-.template-card {
-    height: 64px;
-    border: none;
-    border-left: 4px solid transparent;
-    padding: 8px 12px;
-}
-
-.template-card--cornflower {
-    border-left-color: #bbc9f7;
-}
-
-.template-card--mint {
-    border-left-color: #b2eeeb;
-}
-
-.template-card--lavanda {
-    border-left-color: #c8adff;
-}
-
-.coverage__cell {
-    height: 48px;
-    padding: 0;
-    display: grid;
-    place-items: center;
-    font-size: 14px;
-}
-
-.coverage__cell--empty {
-    background: #fbe5e5;
-    color: #dc2626;
-}
-
-.coverage__cell--filled {
-    background: #ebeffc;
-    color: #3e87ff;
-    font-weight: 500;
-}
-
-.coverage__cell--last {
-    border-radius: 0;
-}
-
 @media (max-width: 1280px) {
+    .shell {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
     .board {
-        grid-template-columns: minmax(0, 1fr);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .panel--main {
+        max-height: none;
     }
 
     .panel--side {
@@ -1102,6 +979,12 @@ input {
 
     .side__section {
         flex: 1 1 260px;
+    }
+}
+
+@media (max-width: 900px) {
+    .toolbar {
+        flex-wrap: wrap;
     }
 }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MenuItem, Shift } from "~/types";
+import type { ContextMenu, Shift } from "~/types";
 import { cellKey } from "~/composables/useSchedule";
 import {
   dayLabel,
@@ -10,14 +10,6 @@ import {
   toYmd,
   weekdayShort,
 } from "~/utils/date";
-
-interface MenuState {
-  items: MenuItem[];
-  x: number;
-  y: number;
-  caption?: string;
-  onSelect: (value: string | number) => void;
-}
 
 const schedule = useSchedule();
 const {
@@ -31,7 +23,7 @@ const {
   coverage,
 } = schedule;
 
-const menu = shallowRef<MenuState | null>(null);
+const menu = shallowRef<ContextMenu | null>(null);
 const dropKey = ref<string | null>(null);
 // Протягивание мышью добавляет ячейки — как в таблицах.
 const dragging = ref(false);
@@ -265,15 +257,14 @@ onBeforeUnmount(() => {
       <div class="schedule__row coverage">
         <div class="coverage__label col-employee">Покрытие</div>
         <div
-          v-for="(date, index) in dates"
+          v-for="date in dates"
           :key="date"
           class="coverage__cell"
-          :class="[
+          :class="
             (coverage.get(date) ?? 0) > 0
               ? 'coverage__cell--filled'
-              : 'coverage__cell--empty',
-            { 'coverage__cell--last': index === dates.length - 1 },
-          ]"
+              : 'coverage__cell--empty'
+          "
         >
           {{ coverage.get(date) ?? 0 }}
         </div>

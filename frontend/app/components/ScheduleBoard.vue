@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import type { MenuItem } from "~/types";
+import type { ContextMenu } from "~/types";
 import { shortTime } from "~/utils/date";
-
-interface MenuState {
-  items: MenuItem[];
-  x: number;
-  y: number;
-  caption?: string;
-  onSelect: (value: string | number) => void;
-}
 
 const schedule = useSchedule();
 const {
@@ -23,7 +15,7 @@ const {
   search,
 } = schedule;
 
-const menu = shallowRef<MenuState | null>(null);
+const menu = shallowRef<ContextMenu | null>(null);
 
 function openApplyMenu(event: MouseEvent): void {
   const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();

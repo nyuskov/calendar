@@ -44,3 +44,11 @@ export interface MenuItem {
   value: string | number;
   danger?: boolean;
 }
+
+export interface ContextMenu {
+  items: MenuItem[];
+  x: number;
+  y: number;
+  caption?: string;
+  onSelect: (value: string | number) => void;
+}

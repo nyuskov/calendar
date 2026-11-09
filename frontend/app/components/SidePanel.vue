@@ -110,7 +110,7 @@ function normalizeEnd(): void {
       </div>
 
       <button
-        class="btn btn--primary"
+        class="btn btn--tinted"
         type="button"
         :disabled="!canApply"
         @click="applyCustom"
